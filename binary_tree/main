@@ -1,0 +1,198 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+typedef struct node node;
+
+struct node
+{
+    int data;
+    node *left, *right;
+};
+
+
+node *root =NULL ;
+
+struct node* create(int data)
+{
+ struct node* node = (struct node*) malloc(sizeof( struct node));
+
+node->data = data;
+node->left = NULL;
+node->right = NULL;
+
+return node;
+}
+
+
+void Add(struct node* node)
+{
+struct node *parent =root ;
+struct node *current =NULL ;
+
+if (root == NULL)
+	root=node;
+
+else
+{ current=root;
+
+    while(current !=NULL){
+    parent = current;
+	if ((node->data) <= (current->data))
+		{
+
+		   current = current->left;
+		}
+	else
+		{
+		    parent=current;
+		    current = current->right;
+		}
+    }
+
+   if ((node->data) <= (parent->data))
+		{
+
+		   parent->left = node;
+
+
+		}
+	else
+		{
+		    parent->right=node;
+		}
+}
+}
+
+node* Search(int data2)
+{
+    node *current = root;
+
+    while(current != NULL)
+    {
+        if(data2 == current->data)
+            return current;
+
+        if(data2 < current->data)
+            current = current->left;
+        else
+            current = current->right;
+    }
+    return NULL;
+}
+
+void Display(node *pDisplay)
+{
+    if (pDisplay == NULL)
+        return;
+    Display(pDisplay->left);
+    printf("%d \n",pDisplay->data);
+    Display(pDisplay->right);
+}
+
+/*
+node* GetParent(node *node)
+{
+
+    node *parent = root;
+
+    while(parent != NULL)
+    {
+        if(parent->left == node || parent->right == node)
+        //JJJJJJ
+         return parent;
+
+        if(node->data < parent->data)
+            parent = parent->left;
+        else
+            parent = parent->right;
+    }
+    return NULL;
+
+}
+
+void Delete(node *pDelete)
+{
+    node *current;
+
+    if(pDelete == root)
+    {
+        if(root->left == NULL && root->right == NULL)
+        {
+            root = NULL;
+        }
+        else if(root-> right == NULL)
+        {
+            root = root->left;
+        }
+         else if(root-> left == NULL)
+        {
+            root = root->right;
+        }
+
+    else
+    {
+        current = root->left;
+        while(current->right != NULL)
+            current = current->right;
+
+        current->right = root->right;
+        root = root->left;
+    }
+}
+    else
+    {
+        node *parent = GetParent(pDelete);
+
+        if(pDelete->left == NULL && pDelete->right == NULL)
+        {
+            if(parent->left == pDelete)
+                parent->left == NULL;
+            else
+                parent->right = NULL;
+        }
+
+        else if (pDelete-> right == NULL)
+        {
+            if(parent->left == pDelete)
+                parent->left = pDelete->left;
+            else
+                parent->right = pDelete->left;
+        }
+
+         else if (pDelete-> left == NULL)
+        {
+            if(parent->left == pDelete)
+                parent->left = pDelete->right;
+            else
+                parent->right = pDelete->right;
+        }
+        else
+        {
+            current = pDelete->left;
+            while(current->right != NULL)
+                current = current->right;
+
+            current->right = pDelete->right;
+        }
+}
+}*/
+
+
+int main()
+{
+    Add(create(5));
+    Add(create(3));
+    Add(create(20));
+    Add(create(1));
+    Add(create(8));
+    Add(create(5));
+    Add(create(40));
+
+
+    Display(root);
+
+    printf("search for number 5,%d",Search(20)->data);
+
+    return 0;
+}
+
